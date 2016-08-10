@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+	
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+</head>
+<body>
+<div>
+	<div>
+		<div>
+			<h1>Titulo</h1>
+			<label>comentario</label>
+			<input>
+		
+		</div>
+		<button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Tooltip on left">
+			Tooltip on left
+		</button>
+		
+		<button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
+			Tooltip on top
+		</button>
+		
+		<button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Tooltip on bottom">
+			Tooltip on bottom
+		</button>
+		
+		<button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="Tooltip on right">
+			Tooltip on right
+		</button>
+	</div>
+	<script>
+		
+		$().ready(function(){
+			
+			var tooltip = {
+				tooltipQuery: '[data-toggle="tooltip"]',
+				isUndefined: function(filter){
+					return (typeof filter === "undefined");
+				},
+				makeFilter: function(filter){
+					return this.tooltipQuery += this.isUndefined(filter) ? "" : filter;
+				},
+				start: function(filter){
+					$(this.makeFilter(filter)).tooltip('show');
+				},
+				stop: function(filter){
+					$(this.makeFilter(filter)).tooltip('hide');
+				},
+				initManual: function(filter, hideAfter){
+					this._init(this.makeFilter(filter), 'manual', this.isUndefined(hideAfter) ? 0 : hideAfter);
+				},
+				initAutomatic: function(filter, hideAfter){
+					this._init(this.makeFilter(filter), 'hover focus', this.isUndefined(hideAfter) ? 0 : hideAfter);
+				},
+				_init: function(filter, mode, hideAfter){
+					var options =
+					{
+						trigger: mode,
+						delay: {
+							show: 0,
+							hide: hideAfter,
+						}
+					};
+					$(this.makeFilter(filter)).tooltip(options);
+				},
+				showForSeconds: function(){
+					setTimeout(function(){
+						this.start();
+						setTimeout(function(){
+							this.stop();
+						}, 2000);
+					}, 2000);
+				}
+			};
+			
+			tooltip.initAutomatic();
+			
+		});
+	
+	
+	</script>
+</div>
+</body>
+</html>

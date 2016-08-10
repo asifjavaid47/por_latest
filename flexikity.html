@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>flexikity</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+	<script src="catalog/view/javascript/jquery/jquery-2.1.1.min.js" type="text/javascript"></script>
+	<script src='http://code.jquery.com/ui/1.11.4/jquery-ui.js'></script>
+	<script src="http://underscorejs.org/underscore-min.js"></script>
+	<script src="catalog/view/javascript/mustache.min.js"></script>
+	<link href="catalog/view/javascript/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+	<script src="catalog/view/javascript/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+	<link href="catalog/view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+	<link href="//fonts.googleapis.com/css?family=Open+Sans:400,400i,300,700" rel="stylesheet" type="text/css"/>
+	<link href="catalog/view/javascript/assets/porcantidad.css" rel="stylesheet" type="text/css"/>
+	<link href="catalog/view/javascript/assets/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+	<link href="catalog/view/javascript/assets/style.css" rel="stylesheet" type="text/css"/>
+
+</head>
+<body>
+<script id="attribute-template" type="x-tmpl-mustache">
+	{{#.}}
+	<select class="attribute-group">
+		{{#attributes}}
+			<option value="{{ attribute_id }}" >{{ attribute_value }}</option>
+		{{/attributes}}
+		</select>
+	{{/.}}
+
+</script>
+<script>
+	
+	
+	$(document).ready(function(){
+		var dataString = '[{"attribute_group_id":"6","attribute":"Processor","attribute_id":"1","attribute_value":"Description"},{"attribute_group_id":"6","attribute":"Processor","attribute_id":"2","attribute_value":"No. of Cores"},{"attribute_group_id":"3","attribute":"Memory","attribute_id":"4","attribute_value":"test 1"},{"attribute_group_id":"3","attribute":"Memory","attribute_id":"5","attribute_value":"test 2"},{"attribute_group_id":"3","attribute":"Memory","attribute_id":"6","attribute_value":"test 3"},{"attribute_group_id":"3","attribute":"Memory","attribute_id":"7","attribute_value":"test 4"},{"attribute_group_id":"3","attribute":"Memory","attribute_id":"8","attribute_value":"test 5"},{"attribute_group_id":"3","attribute":"Memory","attribute_id":"9","attribute_value":"test 6"},{"attribute_group_id":"3","attribute":"Memory","attribute_id":"10","attribute_value":"test 7"},{"attribute_group_id":"3","attribute":"Memory","attribute_id":"11","attribute_value":"test 8"},{"attribute_group_id":"6","attribute":"Processor","attribute_id":"3","attribute_value":"Clockspeed"}]';
+		
+		var template = {
+			titulo: '',
+			link: '',
+			precios: ''
+			precioUnitario: '',
+			tierPrice: [
+				{decimales: '', monto: '', unidades: ''},
+				{decimales: '', monto: '', unidades: ''},
+				{decimales: '', monto: '', unidades: ''},
+				{decimales: '', monto: '', unidades: ''},
+			]
+		};
+		
+		var data = JSON.parse(dataString);
+		debugger;
+		var attributeGroups = _.groupBy(data, 'attribute_group_id');
+		var attributesMapped = _.map(attributeGroups, function(value, key){
+			return {
+				attributeGroup: key,
+				attributes: value
+			}
+		});
+		var template = $('#attribute-template').html();
+		var rendered = Mustache.render(template, attributesMapped);
+		$('.list-cate-main').append(rendered);
+	});
+</script>
+
+<div class="list-cate-main">
+
+</div>
+
+</body>
+</html>
